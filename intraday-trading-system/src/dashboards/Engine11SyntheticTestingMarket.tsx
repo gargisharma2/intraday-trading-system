@@ -26,95 +26,56 @@ const Engine11SyntheticTestingMarket = () => {
   const verdict = survival >= 55 ? 'PASS' : 'FAIL';
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-page-bg">
-      <div className="max-w-7xl mx-auto h-full flex flex-col overflow-hidden">
+    <div className="h-screen overflow-hidden bg-page-bg p-4">
+      <div className="max-w-7xl mx-auto h-full flex flex-col">
         <motion.div
-          className="mb-6 flex-shrink-0"
-          initial={{ opacity: 0, y: -18 }}
+          className="mb-4 flex-shrink-0"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <h1 className="page-title">Internal Intraday Market (Synthetic Testing)</h1>
-          <p className="page-subtitle">Simulated extreme markets before live execution (mock UI).</p>
         </motion.div>
 
-        <div className="h-full overflow-y-auto px-6 pb-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-fr">
-            {/* Card 1 */}
-            <Card title="Extreme Volatility Simulation">
-              <div className="flex items-center justify-between mb-3">
-                <SoftBadge label={`Stress score: ${stress}`} tone={stress < 40 ? 'green' : stress < 70 ? 'amber' : 'red'} />
-                <div className="text-[11px] text-text-secondary">Scenario list (mock)</div>
-              </div>
-              <MiniLineChart points={stressSeries} />
-              <div className="mt-3 flex flex-wrap gap-2">
-                <SoftBadge label="Gap opens" tone="purple" />
-                <SoftBadge label="Vol bursts" tone="orange" />
-                <SoftBadge label="Liquidity snaps" tone="blue" />
-              </div>
-            </Card>
-
-            {/* Card 2 */}
-            <Card title="Liquidity Stress Test">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-sm font-medium text-text-primary">Depth simulation</div>
-                <SoftBadge label={`Survival probability: ${Math.max(0, Math.min(100, survival))}%`} tone={survival >= 70 ? 'green' : survival >= 55 ? 'amber' : 'red'} />
-              </div>
-              <MiniLineChart points={depthSeries} stroke="#22C55E" />
-              <div className="mt-3 text-xs text-text-secondary">Depth degradation increases under stress (mock).</div>
-            </Card>
-
-            {/* Card 3 */}
-            <Card title="News Chaos Simulation">
-              <div className="max-h-[220px] overflow-y-auto divide-y divide-gray-200">
-                {[
-                  { ts: '09:44', title: 'Geo headline shock', tone: 'purple' as const },
-                  { ts: '10:11', title: 'Policy repricing pulse', tone: 'blue' as const },
-                  { ts: '10:58', title: 'Crypto correlation jolt', tone: 'orange' as const }
-                ].map((e, idx) => (
-                  <div key={idx} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between">
-                    <div>
-                      <div className="text-[11px] text-text-secondary">{e.ts}</div>
-                      <div className="text-xs font-medium text-text-primary mt-0.5">{e.title}</div>
-                    </div>
-                    <SoftBadge label="Event" tone={e.tone} />
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4">
-                <div className="text-xs font-medium text-text-primary mb-2">Impact severity</div>
-                <Meter value={impact} />
-              </div>
-            </Card>
-
-            {/* Card 4 */}
-            <Card title="Trade Survival Score">
-              <div className="flex items-center justify-between mb-2">
-                <div className="text-3xl font-semibold text-text-primary">{survival}</div>
-                <SoftBadge label={survival >= 70 ? 'stable' : 'declining'} tone={survival >= 70 ? 'green' : 'amber'} />
-              </div>
-              <div className="text-xs text-text-secondary">0 = Failed, 100 = Safe (mock).</div>
-            </Card>
-
-            {/* Card 5 */}
-            <Card title="Final Verdict Banner">
-              <Banner
-                label={verdict}
-                tone={verdict === 'PASS' ? 'green' : 'red'}
-                description={
-                  verdict === 'PASS'
-                    ? 'Synthetic stress test outcome is acceptable.'
-                    : 'Fail reasons: slippage, volatility burst, liquidity collapse.'
-                }
-              />
-            </Card>
-
-            {/* Card 6 - Placeholder */}
-            <Card title="Reserved">
-              <div className="flex items-center justify-center h-full text-text-secondary text-sm">
-                Additional simulation metrics
-              </div>
-            </Card>
+        <div className="flex-1 overflow-auto mt-10 p-4">
+          <div className="mb-8">
+            <button className='btn-primary p-5 font-bold text-lg'>Initiate the Process</button>
+          </div>
+            
+          {/* Data Table */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-100 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Type of Dataset</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Time</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">PDF</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Market Data Analysis</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">10:30 AM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">market_report.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Risk Assessment Profile</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">2:15 PM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">risk_profile.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

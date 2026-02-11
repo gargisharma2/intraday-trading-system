@@ -20,8 +20,6 @@ import Engine12FinalStrategyConstruction from '../dashboards/Engine12FinalStrate
 import DatasetCleaningDashboard from '../dashboards/DatasetCleaningDashboard';
 import TrainingDashboard from '../dashboards/TrainingDashboard';
 import EvaluationDashboard from '../dashboards/EvaluationDashboard';
-import StrategyFormulaDashboard from '../dashboards/StrategyFormulaDashboard';
-import StrategyOptimizationDashboard from '../dashboards/StrategyOptimizationDashboard';
 import DeploymentDashboard from '../dashboards/DeploymentDashboard';
 import PreMarketDatasetDashboard from '../dashboards/PreMarketDatasetDashboard';
 
@@ -48,8 +46,6 @@ const AppRouter = () => {
           <Route path="/dataset-cleaning" element={<DatasetCleaningDashboard />} />
           <Route path="/training" element={<TrainingDashboard />} />
           <Route path="/evaluation" element={<EvaluationDashboard />} />
-          <Route path="/strategy-formula" element={<StrategyFormulaDashboard />} />
-          <Route path="/strategy-optimization" element={<StrategyOptimizationDashboard />} />
           <Route path="/deployment" element={<DeploymentDashboard />} />
           <Route path="/pre-market-dataset" element={<PreMarketDatasetDashboard />} />
         </Routes>

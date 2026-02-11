@@ -51,8 +51,6 @@ const menuItems: MenuItem[] = [
   { id: 'dataset-cleaning', label: 'Dataset Cleaning Dashboard', icon: Database, path: '/dataset-cleaning' },
   { id: 'training', label: 'Training Dashboard', icon: Brain, path: '/training' },
   { id: 'evaluation', label: 'Evaluation Dashboard', icon: CheckCircle, path: '/evaluation' },
-  { id: 'strategy-formula', label: 'Strategy Formula Generation', icon: Calculator, path: '/strategy-formula' },
-  { id: 'strategy-optimization', label: 'Strategy Optimization', icon: Zap, path: '/strategy-optimization' },
   { id: 'deployment', label: 'Deployment Dashboard', icon: Rocket, path: '/deployment' },
   { id: 'pre-market-dataset', label: 'Pre-Market Dataset Dashboard', icon: Clock, path: '/pre-market-dataset' },
 ];
@@ -95,13 +93,13 @@ const Sidebar = ({ onLoginClick }: SidebarProps) => {
       variants={sidebarVariants}
     >
       {/* Header */}
-      <div className="px-4 py-3 border-b border-sidebar-text border-opacity-20">
+      <div className="px-4 py-3 border-b border-sidebar-text border-opacity-20 flex-shrink-0">
         <h1 className="text-lg font-bold text-sidebar-text">Intraday AI Trading</h1>
         <p className="text-xs text-sidebar-text text-opacity-70 mt-1">System Dashboard</p>
       </div>
 
-      {/* Menu Items - static (no scroll) */}
-      <div className="flex-1 py-2">
+      {/* Menu Items - scrollable with custom thin scrollbar */}
+      <div className="flex-1 py-2 overflow-y-auto scrollbar-thin">
         <div className="px-3 space-y-1">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
@@ -128,7 +126,7 @@ const Sidebar = ({ onLoginClick }: SidebarProps) => {
       </div>
 
       {/* Admin Login at Bottom */}
-      <div className="px-3 py-2 border-t border-sidebar-text border-opacity-20">
+      <div className="px-3 py-2 border-t border-sidebar-text border-opacity-20 flex-shrink-0">
         <motion.button
           className="sidebar-item w-full"
           onClick={onLoginClick}
@@ -139,6 +137,32 @@ const Sidebar = ({ onLoginClick }: SidebarProps) => {
           <span className="text-[11px] font-medium">Admin Login</span>
         </motion.button>
       </div>
+
+      {/* Custom Scrollbar Styles */}
+      <style>{`
+        .scrollbar-thin::-webkit-scrollbar {
+          width: 3px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 10px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Firefox */
+        .scrollbar-thin {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+        }
+      `}</style>
     </motion.div>
   );
 };

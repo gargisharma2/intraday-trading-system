@@ -106,79 +106,46 @@ const InstrumentQualityDashboard = () => {
         </motion.div>
 
         {/* Main Content Area - scrollable */}
-        <div className="flex-1 overflow-y-auto">
-          {/* Single Column - Instrument Quality Evaluation (expanded) */}
-          <motion.div
-            className="card h-full max-h-[75vh] overflow-hidden flex flex-col"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h2 className="section-title mb-4">Instrument Quality Evaluation</h2>
-
-            {/* Quality Evaluations Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {qualityEvaluations.map((evaluation, index) => {
-                const Icon = evaluation.icon;
-                return (
-                  <motion.div
-                    key={evaluation.title}
-                    className="flex items-center p-3 bg-accent bg-opacity-5 rounded-lg border border-accent border-opacity-20 hover:bg-opacity-10 transition-all duration-200"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="p-2 bg-accent bg-opacity-10 rounded-full mr-3">
-                      <Icon className="w-4 h-4 text-accent" />
-                    </div>
-                    <span className="text-sm font-medium text-text-primary">{evaluation.title}</span>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <p className="text-text-secondary text-sm leading-relaxed">
-              Evaluates instrument quality to allow only high-execution-grade assets.
-            </p>
-
-            {/* Gate output (Pass/Restricted/Fail) */}
-            <div className="mt-6 bg-gray-50 rounded-lg p-4 border border-gray-200 flex-1 overflow-y-auto">
-              <div className="flex items-center justify-between gap-3 mb-3">
-                <div className="text-sm font-semibold text-text-primary">Approved instrument flow</div>
-                <div className="text-[11px] text-text-secondary">
-                  Only <span className="font-semibold text-text-primary">Pass</span> instruments flow forward.
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                {instruments.map((ins) => (
-                  <div key={ins.symbol} className="bg-white rounded-lg border border-gray-200 p-3">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="text-xs font-semibold text-text-primary">
-                          {ins.symbol}{' '}
-                          <span className="text-[11px] font-medium text-text-secondary">({ins.venue})</span>
-                        </div>
-                        <div className="text-[11px] text-text-secondary mt-1 leading-snug">
-                          {ins.note}
-                        </div>
-                      </div>
-                      <StatusBadge label={gateStateLabel(ins.gate)} colorClass={gateStateColorClass(ins.gate)} />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
-                      <div className="sm:col-span-1">
-                        <ThresholdGauge value={ins.qualityScore} label="Quality score" />
-                      </div>
-                      <MetricCard label="Liquidity" value={ins.liquidity} helper="Spread/turnover/depth" />
-                      <MetricCard label="Execution risk" value={ins.executionRisk} helper="Slippage & fill risk" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+        <div className="flex-1 overflow-auto mt-10 p-4">
+          <div className="mb-8">
+            <button className='btn-primary p-5 font-bold text-lg'>Initiate the Process</button>
+          </div>
+            
+          {/* Data Table */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-100 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Type of Dataset</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Time</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">PDF</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Market Data Analysis</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">10:30 AM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">market_report.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Risk Assessment Profile</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">2:15 PM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">risk_profile.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

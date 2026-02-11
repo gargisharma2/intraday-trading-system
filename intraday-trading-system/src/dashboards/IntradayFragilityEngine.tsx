@@ -33,38 +33,57 @@ const IntradayFragilityEngine = () => {
   const map = useMemo(() => failurePointMap(snapshot), [snapshot]);
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-page-bg">
+    <div className="h-screen overflow-hidden bg-page-bg p-4">
       <div className="max-w-7xl mx-auto h-full flex flex-col">
         <motion.div
-          className="mb-6 flex-shrink-0"
-          initial={{ opacity: 0, y: -18 }}
+          className="mb-4 flex-shrink-0"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
           <h1 className="page-title">Intraday Risk Understanding & Fragility Engine</h1>
-          <p className="page-subtitle">Mock intraday fragility signals with periodic updates.</p>
         </motion.div>
 
         {/* Scrollable main content area for Engine 8 only */}
-        <div className="h-full overflow-y-auto px-6 pb-10">
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {/* LEFT COLUMN */}
-            <div className="flex flex-col gap-6">
-              <IntradayFragilityMeter index={snapshot.fragilityIndex} state={snapshot.fragilityState} />
-              <FailureSpeedIndicator speed={snapshot.failureSpeed} />
-              <RiskEscalationThresholdPanel current={snapshot.threshold} />
-              <FragilityZonesChart points={zones} />
-            </div>
-
-            {/* RIGHT COLUMN */}
-            <div className="flex flex-col gap-6">
-              <ContributingRiskFactors rows={factors} />
-              <RealTimeSystemHealthAlert alert={alert} />
-              <FailurePointMap map={map} />
-              <div className="text-xs text-text-secondary text-right pr-1">
-                Last updated {snapshot.lastUpdated}
-              </div>
-            </div>
+        <div className="flex-1 overflow-auto mt-10 p-4">
+          <div className="mb-8">
+            <button className='btn-primary p-5 font-bold text-lg'>Initiate the Process</button>
+          </div>
+            
+          {/* Data Table */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-100 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Type of Dataset</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Time</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">PDF</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Market Data Analysis</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">10:30 AM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">market_report.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Risk Assessment Profile</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">2:15 PM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">risk_profile.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -73,4 +92,3 @@ const IntradayFragilityEngine = () => {
 };
 
 export default IntradayFragilityEngine;
-

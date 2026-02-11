@@ -149,124 +149,49 @@ const AssetAllocationDashboard = () => {
           <h1 className="page-title">Intraday Asset-Type Allocation & Market Regime Engine</h1>
         </motion.div>
 
-        {/* Main Content Grid */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch content-start place-items-stretch overflow-hidden">
-          {/* Left Column - Market Regime Detection */}
-          <motion.div
-            className="card h-full max-h-[75vh] overflow-hidden flex flex-col"
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h2 className="section-title mb-4">Market Regime Detection</h2>
-
-            <div className="flex items-start justify-between gap-3 mb-4 bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <div className="min-w-0">
-                <div className="text-xs font-semibold text-text-secondary mb-1">Today’s regime</div>
-                <div className="text-sm font-semibold text-text-primary truncate">{todaysRegime.title}</div>
-                <div className="text-[11px] text-text-secondary mt-1 leading-relaxed">
-                  {todaysRegime.description}
-                </div>
-              </div>
-              <StatusBadge label="Active" colorClass="bg-slate-700" />
-            </div>
-
-            {/* Market Regimes Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {marketRegimes.map((regime, index) => {
-                const Icon = regime.icon;
-                const isActive = regime.key === todaysRegime.key;
-                return (
-                  <motion.div
-                    key={regime.title}
-                    className={`flex items-center p-3 rounded-lg border transition-all duration-200 ${
-                      isActive
-                        ? 'bg-accent bg-opacity-10 border-accent border-opacity-40'
-                        : 'bg-accent bg-opacity-5 border-accent border-opacity-20 hover:bg-opacity-10'
-                    }`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    <div className="p-2 bg-accent bg-opacity-10 rounded-full mr-3">
-                      <Icon className="w-4 h-4 text-accent" />
-                    </div>
-                    <span className="text-sm font-medium text-text-primary">{regime.title}</span>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            <p className="text-text-secondary text-sm leading-relaxed">
-              Identifies today’s intraday market regime and allocates focus to trade types that remain safe and executable.
-            </p>
-          </motion.div>
-
-        {/* Right Column - Asset Allocation */}
-        <div className="h-full overflow-hidden">
-            {/* Asset-Type Allocation Focus */}
-            <motion.div
-              className="card h-full max-h-[75vh] overflow-hidden flex flex-col"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <h2 className="section-title mb-4">Asset-Type Allocation Focus</h2>
-
-              {/* Asset Allocations Grid */}
-              <div className="grid grid-cols-2 gap-3 flex-1 overflow-y-auto pr-1">
-                {assetAllocations.map((allocation, index) => {
-                  const Icon = allocation.icon;
-                  const isDominant = allocation.focusPct >= 30 && allocation.state !== 'not_allowed';
-                  return (
-                    <motion.div
-                      key={allocation.title}
-                      className={`p-3 rounded-lg border transition-all duration-200 ${
-                        isDominant
-                          ? 'bg-accent bg-opacity-10 border-accent border-opacity-40'
-                          : 'bg-accent bg-opacity-5 border-accent border-opacity-20 hover:bg-opacity-10'
-                      }`}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex items-center min-w-0">
-                          <div className="p-1.5 bg-accent bg-opacity-10 rounded-full mr-3">
-                            <Icon className="w-3.5 h-3.5 text-accent" />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="text-xs font-semibold text-text-primary truncate">
-                              {allocation.title}
-                            </div>
-                            <div className="text-[11px] text-text-secondary mt-1 leading-snug line-clamp-2">
-                              {allocation.rationale}
-                            </div>
-                          </div>
-                        </div>
-                        <StatusBadge
-                          label={allowStateLabel(allocation.state)}
-                          colorClass={allowStateColorClass(allocation.state)}
-                        />
-                      </div>
-
-                      <div className="mt-3">
-                        <MetricCard
-                          label="Today’s focus"
-                          value={`${allocation.focusPct}%`}
-                          helper={allocation.state === 'not_allowed' ? 'Blocked for today’s regime/suitability.' : isDominant ? 'Dominant allocation today.' : 'Reduced allocation.'}
-                          stateColorClass={allocation.state === 'not_allowed' ? 'text-red-600' : isDominant ? 'text-accent' : 'text-text-primary'}
-                        />
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
+        {/* Main Content */}
+        <div className="flex-1 overflow-auto mt-10 p-4">
+          <div className="mb-8">
+            <button className='btn-primary p-5 font-bold text-lg'>Initiate the Process</button>
+          </div>
+            
+          {/* Data Table */}
+          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-100 border-b border-gray-200">
+                <tr>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Type of Dataset</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Time</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">PDF</th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Market Data Analysis</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">10:30 AM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">market_report.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+                <tr className="hover:bg-gray-50 transition-colors">
+                  <td className="px-6 py-4 text-sm text-gray-800">Risk Assessment Profile</td>
+                  <td className="px-6 py-4 text-sm text-gray-600">2:15 PM</td>
+                  <td className="px-6 py-4 text-sm text-blue-600 underline cursor-pointer">risk_profile.pdf</td>
+                  <td className="px-6 py-4">
+                    <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                      Initiate
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+            
       </div>
     </div>
   );
